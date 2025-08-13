@@ -387,26 +387,26 @@ $event
 --------------------------------------------------------------------------------------------------
 4.Two-ways Binding
 -------------------
--> In case of two-ways binding it is combination of the "property binding" and "Event Binding".
+- In case of two-ways binding it is combination of the "property binding" and "Event Binding".
 
 Syntax:
 -------
+``
  <tag [(ngModel)]="property"></tag>
-
--> Here ngModel is a pre-define directive which help to enable the two-ways binding.
-
-Note: ngModel we cannot use directly inside the template until unware we have to import the
+```
+- Here ngModel is a pre-define directive which help to enable the two-ways binding.
+- Note: ngModel we cannot use directly inside the template until unware we have to import the
        Pre-Define Module i.e. FormsModule
             -> Before Angular 14 we suppose the configure the FormsModule inside the app.module.ts
               but since from angular 15 we can configure inside the components itself by using
               standalone:true
 
--> When you change the value of property , the same will be automatically updated in the HTML element.
--> When we change the value of HTML element, the same will be automatically  updated in the  property.
--> Two-ways binding is applicable only for <input> and <select> tag.
--> "FormsModule" must be imported in order to use the two-ways binding.
+- When you change the value of property , the same will be automatically updated in the HTML element.
+- When we change the value of HTML element, the same will be automatically  updated in the  property.
+- Two-ways binding is applicable only for <input> and <select> tag.
+- "FormsModule" must be imported in order to use the two-ways binding.
+#Example:
 
-Example:
 Step1: app.component.ts
 ```
 import { Component } from '@angular/core';
@@ -450,8 +450,6 @@ export class AppComponent {
 ```
 ```
 Step2:app.component.html
- 
-
  Select:<select [(ngModel)]="msg2">
   <option value="op1">op1</option>
   <option value="op2">op2</option>
@@ -462,31 +460,30 @@ Step2:app.component.html
 Selection:{{msg2}}
 ```
 ------------------------------------------------------------------------------------------------------------------
-Directives
+##Directives
 -----------
--> Directives are classes that add additional behavior to elements in your Angular applications.
--> The following are the categories of directives:
+- Directives are classes that add additional behavior to elements in your Angular applications.
+- The following are the categories of directives:
 
 1. Build-In Directives
-
   a. Component -> In order to declare the compoent with decorator @Component({meta-data})
   b. Attribute -> It will focus on appearance of the elements, the following are the different attributes directives:
                   I. ngClass
                   II.ngStyle
                   III.ngModel : To achieve the two-ways communication
-
-
- style
+#style
 --------
--> It is used to set the css property value dynamically(i.e. runtime).
--> When the value of the component property is changed, the value of css property will be automatically gets changed.
+- It is used to set the css property value dynamically(i.e. runtime).
+- When the value of the component property is changed, the value of css property will be automatically gets changed.
 
 Syntax
 ------
+```
 <tag [style.cssProperty]="componentPropertyName"></tag>
-
-Example:
+```
+##Example:
 Step1: app.component.ts
+```
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
  
@@ -513,32 +510,27 @@ export class AppComponent {
   }
   }
 }
-
-Step2: app.component.html
- 
- 
-
-
+```
+##Step2: app.component.html
+```
  <button (click)="onChange($event)">Action</button>
  <hr/>
  Message: <h2 [style.color]="mycolor">{{msg}}</h2>
-
-
+```
 ngClass
 --------
 - It is used to set the css class name dynamically.
 - When the value of component property is changed, the css class will be automatically changed.
 - This directive to set styles with multiple properties, conditionally at runtime.
-
 Syntax
 ------
+```
 <tag [ngClass]="component.property"></tag>
-
-
+```
 Example
 --------
 Step1: app.component.css
-
+```
 .class1{
     color:green;
 }
@@ -546,9 +538,9 @@ Step1: app.component.css
 .class2{
     color:red;
 }
-
-
-Step2:app.component.ts
+```
+# Step2:app.component.ts
+```
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -576,12 +568,13 @@ export class AppComponent {
   }
   }
 }
-
-Step3:app.component.html
- <button (click)="onChange($event)">Action</button>
+```
+##Step3:app.component.html
+```
+<button (click)="onChange($event)">Action</button>
  <hr/>
  Message: <h2 [ngClass]="mycolor">{{msg}}</h2>
-
+```
 
 III. ngStyle
 
@@ -589,10 +582,11 @@ III. ngStyle
 -------------------------------------------------------------------------------------------------- 
 c. Structural
 --------------
--> It is pre-define directives which is basically used to evalte the element based on some conditions.
--> It is generally start with a symbol(*) asterisk.
--> We can use inside the template.
--> The following are the directives:
+- It is pre-define directives which is basically used to evalte the element based on some conditions.
+- It is generally start with a symbol(*) asterisk.
+- We can use inside the template.
+- The following are the directives:
+- 
 1. *ngIf
 2. *ngFor
 3. *ngSwitch
@@ -600,12 +594,11 @@ c. Structural
 1. *ngIf
 -------
 - It is use to displays the elements if the condition is true , otherwise the element will be deleted from the DOM.
-
-
 Example
 --------
 app.component.ts
 -----------------
+```
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -624,11 +617,10 @@ export class AppComponent {
     this.flag=true;
   }
 }
+```
 
-
-Step2:app.component.html
- 
- 
+##Step2:app.component.html
+``` 
 <button (click)="action()">Action</button>
  
 <div *ngIf="flag;else othercond">
@@ -638,27 +630,26 @@ Step2:app.component.html
 <ng-template #othercond>
 <h2>Updating Messaage...</h2>
 </ng-template>
-
-
+```
 -------------------------------------------------------------------------------------------
 II. *ngFor
 --------------
--> It is used to repeat the tag once for each element in the array.
--> It generates(repets) the given content once for an element of the array.
--> We have take the a group of items to print in the <ul> list.
--> We use prefix as "*" for ngFor.
--> It is use basically used to dispaly the list of records like list of users details, product details, category details, payments details etc...
-
+- It is used to repeat the tag once for each element in the array.
+- It generates(repets) the given content once for an element of the array.
+-  We have take the a group of items to print in the <ul> list.
+- We use prefix as "*" for ngFor.
+- It is use basically used to dispaly the list of records like list of users details, product details, category details, payments details etc...
 Syntax
 --------
+```
 <tag *ngFor="let var of array">
     <!-- write the code here-->
 </tag>
-
-
+```
 Example1:
 ---------
 app.component.ts
+```
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -674,9 +665,9 @@ export class AppComponent {
    items:any=['ITEM1','ITEM2','ITEM3','ITEM4','ITEM5'];
 
 }
-
-app.component.html
-
+```
+##app.component.html
+```
  <div>
        <ul>
            <li *ngFor="let item of items;">
@@ -684,10 +675,10 @@ app.component.html
            </li>
        </ul>
  </div>
-
-
-with index
+```
+#with index
 ----------
+ ```
  <div>
        <ul>
            <li *ngFor="let item of items;index as i">
@@ -695,28 +686,30 @@ with index
            </li>
        </ul>
  </div>
+```
 --------------------------------------------------------------------------------------------------
-Q. What is the interface in  typescript?
+##Q. What is the interface in  typescript?
 Ans:
 - In generally it is a specification of method prototype.
 - But in case of typescript is used to define the structure for an object i.e. what properties
   it should have the respective data type.
-
-Example:
+#Example:
 ---------
 Step1:
 product.model.ts
 -----------------
+```
 export interface Product{
 id:number;
 name:string;
 price:number;
 qt:number
 }
-
+```
 Step2:
 app.component.ts
 ----------------
+```
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -758,7 +751,9 @@ export class AppComponent {
    ];
  
 }
-Step3: app.component.html
+```
+##Step3: app.component.html
+```
 <table class="table table-hover">
   <thead>
     <tr>
@@ -779,16 +774,17 @@ Step3: app.component.html
     
   </tbody>
 </table>
+```
 -------------------------------------------------------------------------------------------------
-Nested
+##Nested
 -------
-Step1:product.model.ts
+##Step1:product.model.ts
+```
 interface Address{
     street:string;
     state:string;
     city:string;
 }
-
 export interface Product{
 id:number;
 name:string;
@@ -796,8 +792,10 @@ price:number;
 qt:number;
 address:Address;
 }
+```
 
-Step2: app.component.ts
+##Step2: app.component.ts
+```
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -851,7 +849,9 @@ export class AppComponent {
    ];
  
 }
-Step3: app.component.html
+```
+##Step3: app.component.html
+```
 <table class="table table-hover">
   <thead>
     <tr>
@@ -874,12 +874,13 @@ Step3: app.component.html
     
   </tbody>
 </table>
+```
 -------------------------------------------------------------------------------------------------
--> Make some changes in template , and added the pipe into the template.
--> As of know we were using pipe i.e. lowercase and currency for the time being.
-
-app.component.html
+- Make some changes in template , and added the pipe into the template.
+- As of know we were using pipe i.e. lowercase and currency for the time being.
+##app.component.html
 ------------------
+```
 <table class="table table-hover">
   <thead>
     <tr>
@@ -902,11 +903,12 @@ app.component.html
     
   </tbody>
 </table>
+```
 --------------------------------------------------------------------------------------------------
--> Next thing we have added the actions to perform update and delete the data from an array.
-
-app.component.ts
+- Next thing we have added the actions to perform update and delete the data from an array.
+##app.component.ts
 -----------------
+```
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -969,8 +971,9 @@ export class AppComponent {
      this.products.splice(i,1);
    }
 }
-
-app.component.html
+```
+##app.component.html
+```
 <table class="table table-hover">
   <thead>
     <tr>
@@ -999,17 +1002,20 @@ app.component.html
     
   </tbody>
 </table>
+```
 -----------------------------------------------------------------------------------------------
-Communication between Two Components i.e. Parent->Child and Child->Parent
-============================================================================
+##Communication between Two Components i.e. Parent->Child and Child->Parent
 
-Step1: Created a Child Component by using the following command:
-
+##Step1: Created a Child Component by using the following command:
+```
 >ng g c child
+```
 
-Step2: Inside the AppComponent we have return the following code:
+##Step2: Inside the AppComponent we have return the following code:
+
 app.component.ts
 ------------------
+```
 import { Component } from '@angular/core';
 import { ChildComponent } from './child/child.component';
 import { FormsModule } from '@angular/forms';
@@ -1045,10 +1051,10 @@ Child Message:{{childMsgRec}}
 
 
  <hr/>
-
-Step3: Inside the child.component.ts we have received and send the data to parent
-
-child.component.ts
+```
+##Step3: Inside the child.component.ts we have received and send the data to parent
+###child.component.ts
+```
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
@@ -1068,11 +1074,11 @@ export class ChildComponent {
  this.replyMsg='';
  }
 }
-
-Step4: Inside the child.component.html 
+```
+##Step4: Inside the child.component.html 
 - Here we have written the code to print the parent message and we created a form to send the 
   data the parent.
-
+```
 <hr/>
 <h1>CHILD-COMPONENT</h1>
 Message:<strong>{{pMsg}}</strong>
@@ -1080,30 +1086,30 @@ Message:<strong>{{pMsg}}</strong>
 
 Child Reply:<input type="text" [(ngModel)]="replyMsg"/>
 &nbsp;&nbsp;<button (click)="sendReplyToParent()" class="btn btn-info">SEND REPLY TO PARENT</button>
+```
 ------------------------------------------------------------------------------------------------
-Forms and Validation
+##Forms and Validation
 ---------------------
-
 1. Template Driven form
 ------------------------
--> It is best suitable for development of simple forms with the limited no of fileds and
+- It is best suitable for development of simple forms with the limited no of fileds and
    simple validation.
--> They follow the a view-driven approach.
--> In case of template driven form the forms are created and validations are handled directly
+- They follow the a view-driven approach.
+- In case of template driven form the forms are created and validations are handled directly
    in the template.
--> In this form , each field its represented as a property in the component class.
--> Validations rules are defined in the template by using HTML5 attributes and Validation messages
+- In this form , each field its represented as a property in the component class.
+- Validations rules are defined in the template by using HTML5 attributes and Validation messages
    are displayed using validation properties of angular.
--> "FormsModule" should be imported from "@angular/forms" package.
+- "FormsModule" should be imported from "@angular/forms" package.
 
-
- HTML5 attributes for validations:
+#HTML5 attributes for validations:
 -----------------------------------
+
 1. required="required"   -> Field is mandatory
 2. minlength="n"         -> Minimum no of characters
 3. pattern="reg_exp"     -> Regular expression
 
-Validation Properties of angular
+##Validation Properties of angular
 --------------------------------
 1. touched
    - true     : Field is focused.
@@ -1138,7 +1144,8 @@ Validation Properties of angular
       email     : true/false
      
 -------------------------------------------------------------------------------------
-Character classes
+##Character classes
+```
 [abc]	a, b, or c (simple class)
 [^abc]	Any character except a, b, or c (negation)
 [a-zA-Z]	a through z or A through Z, inclusive (range)
@@ -1146,19 +1153,21 @@ Character classes
 [a-z&&[def]]	d, e, or f (intersection)
 [a-z&&[^bc]]	a through z, except for b and c: [ad-z] (subtraction)
 [a-z&&[^m-p]]	a through z, and not m through p: [a-lq-z](subtraction)
- 
-Greedy quantifiers
+``` 
+##Greedy quantifiers
 ------------------
+```
 X?	X, once or not at all
 X*	X, zero or more times
 X+	X, one or more times
 X{n}	X, exactly n times
 X{n,}	X, at least n times
 X{n,m}	X, at least n but not more than m times
+```
 
- 
-HTM5 VALIDATION RULES
+##HTM5 VALIDATION RULES
 ---------------------
+```
 S.No      Desc              Regular Expression   
 ----------------------------------------------------
 1.     Only alphabets       ^[a-zA-Z]*$ 
@@ -1168,7 +1177,8 @@ S.No      Desc              Regular Expression
        (Alphabets, Digits    ^[a-zA-Z0-9-]+$
         & Hyphens only)
 ------------------------------------------------------
-Example1:
+```
+##Example1:
  
  
   <form>
