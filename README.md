@@ -1632,17 +1632,21 @@ export const routes: Routes = [
  
 baseURL -> / (base url)
 
-  - It is mapping with path:'' and redirect to /home (HomeComponent)
+  -It is mapping with path:'' and redirect to /home (HomeComponent)
   -It is mapping with path:'login' and redirect to LoginComponent
 ----------------------------------------------------------------------------------------------------------
 ##As of now we have create the following things:
+
 ##Step1: Create a new project
+
 ```
 >ng new ems-app
 >cd ems-app
 >code .
 ```
+
 ##Step2: Create the following components
+
 ```
 >ng g c components/home
 >ng g c components/service
@@ -1651,7 +1655,9 @@ baseURL -> / (base url)
 >ng g c components/login
 >ng g c components/notfound
 ```
+
 ##Step3: Configure the corresponding path to the component inside the app.routes.ts
+
 ```
 import { Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
@@ -1671,9 +1677,12 @@ export const routes: Routes = [
    {path:'**',component:NotfoundComponent}
 ];
 ```
+
 ##Step4: Inside the app.component.html we have specifiy the placeholder to view the respective component  template.
+
 I. app.component.ts
 --------------------
+
 ```
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
@@ -1688,7 +1697,9 @@ export class AppComponent {
   title = 'ems-app';
 }
 ```
+
 ##II.app.component.html
+
 ```
 <h1>AppComponent</h1>
 
@@ -1697,11 +1708,15 @@ export class AppComponent {
 <router-outlet></router-outlet>
 
 ```
+
 #Step5: Start the server
+
 ```
 >npm start
 ```
+
 #Step6: Perform the unit testing by opening the browser:
+
 ```
 URLS
 ----
@@ -1714,9 +1729,12 @@ http://localhost:4200/login      ->It will redirect to LoginComponent
 http://localhost:4200/login1     ->It will redirect to NotFoundComponent
 -----------------------------------------------------------------------------------------------------------
 ```
+
 ##Now we have created the following components(layout):
 -----------------------------------------------------
+
 ##Step1:
+
 ```
 >ng g c components/header
 >ng g c components/footer
@@ -1740,7 +1758,9 @@ http://localhost:4200/login1     ->It will redirect to NotFoundComponent
   </div>
 </nav>
 ```
+
 ##Step3: Inside the footer.component.html the following code we have written:
+
  ```
  <!-- Remove the container if you want to extend the Footer to full width. -->
 <div class="container my-5">
@@ -1772,7 +1792,9 @@ http://localhost:4200/login1     ->It will redirect to NotFoundComponent
 </div>
 <!-- End of .container -->
 ```
+
 ##Step4: We have configure the bootstrap and icons inside the index.html page
+
 ```
 <!doctype html>
 <html lang="en">
@@ -1799,7 +1821,9 @@ http://localhost:4200/login1     ->It will redirect to NotFoundComponent
 </body>
 </html>
 ```
+
 ##Step5:Inside the home.component.html we have create the layout by using bootstrap grid system:
+
 ```
 <div class="container">
     <!--1st Row Added the HeaderComponent-->
@@ -1821,7 +1845,9 @@ http://localhost:4200/login1     ->It will redirect to NotFoundComponent
   </div>
 </div>
 ```
+
 ##Step6: Inside the home.component.ts file
+
 import { Component } from '@angular/core';
 import { HeaderComponent } from "../header/header.component";
 import { FooterComponent } from "../footer/footer.component";
@@ -1840,9 +1866,11 @@ export class HomeComponent {
 ##Step7:Inside the app.component.html
 ```
 <app-home></app-home>
+
 ```
 
 ##Step8: Inside the aboutus.component.html
+
 ```
 <div class="row">
   <div class="col-md-8 ml-5 mt-4">
@@ -1870,7 +1898,9 @@ export class HomeComponent {
   </div>
 </div>
 ```
+
 ##Step10: Inside the login.component.html (do your own way)
+
 ```
  <div class="container">
     <h1>Login Page</h1>
@@ -1907,7 +1937,9 @@ export class HomeComponent {
     </div>
 </div>
 ```
+
 ##Step11: Inside the login.component.ts
+
 ```
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
@@ -1958,7 +1990,9 @@ export class LoginComponent {
 
 }
 ```
+
 ##Step12: login.component.css
+
 ```
 .e1{
     color:red;
@@ -2046,7 +2080,9 @@ h2 {
     font-weight: bold;
 }
 ```
+
 ##Step12:Inside the gallery.component.html
+
 ```
 <div class="container mt-2">
     <h1 style="text-align: center;text-decoration: underline;">GALLERY</h1>
@@ -2084,6 +2120,7 @@ h2 {
     </div>
 </div>
 ```
+
 ##Step13:Inside the gallery.component.ts
 ```
 import { Component } from '@angular/core';
@@ -2107,9 +2144,7 @@ export class GalleryComponent {
 >npm start
 ```
 ##Step16: Open the browser and type the following url:
-  ```
-http://localhost:4200/
-```
+  ###http://localhost:4200/
 -------------------------------------------------------------------------------------------------------------
 
 
