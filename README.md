@@ -1578,10 +1578,10 @@ h2 {
 }
 ```
 -------------------------------------------------------------------------------------------------------------- 
-# Routing in Angular
+#Routing in Angular
 ----------------------------
-Route
------
+#Route
+---------------------------------------
 - Route basically tells the angular router which view to display when a user clicks a link(hyperlink)
    or a URL into the browser address bar.
 
@@ -1714,10 +1714,10 @@ export class AppComponent {
 ```
 >npm start
 ```
-
 #Step6: Perform the unit testing by opening the browser:
 
 ```
+
 URLS
 ----
 http://localhost:4200/           -> It will redirect to HomeComponent
@@ -1728,6 +1728,7 @@ http://localhost:4200/gallery    ->It will redirect to GalleryComponent
 http://localhost:4200/login      ->It will redirect to LoginComponent
 http://localhost:4200/login1     ->It will redirect to NotFoundComponent
 -----------------------------------------------------------------------------------------------------------
+
 ```
 
 ##Now we have created the following components(layout):
