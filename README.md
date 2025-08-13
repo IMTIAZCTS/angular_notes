@@ -1179,8 +1179,7 @@ S.No      Desc              Regular Expression
 ------------------------------------------------------
 ```
 ##Example1:
- 
- 
+ ```
   <form>
     <label for="eid">EID:</label>
     <input type="text" name="eid" id="eid" required="required" [(ngModel)]="eid" #id="ngModel"/>
@@ -1197,65 +1196,56 @@ S.No      Desc              Regular Expression
    Pristine:{{id.pristine}}<br/>
     <input type="submit" value="STORE"/>
   </form>
- 
+ ```
 ------------------------------------------------------------------------------------------------------------------
-Q: What is ngForm?
+##Q: What is ngForm?
 Ans
--> It is build-in angular directive which is automatically added to the <form> tag specially when we were working
+- It is build-in angular directive which is automatically added to the <form> tag specially when we were working
    with template driven form.
--> It is used to create and manages an instance of Angular NgForm class , which represent the entire form in the
+- It is used to create and manages an instance of Angular NgForm class , which represent the entire form in the
   template.
+- It basically allows to track and control the form state without manually creating a FormGroup in the component.
 
--> It basically allows to track and control the form state without manually creating a FormGroup in the component.
-
--> We can access the values of the form by using following:
+- We can access the values of the form by using following:
 
    - forms.value : In order to get the current form vield value.
    - forms.valid/forms.invalid : This is to check the status of validation
    - forms.controls : It will allow you to check the individual fields control.
-
-
 --------------------------------------------------------------------------------------------------------------------
-Example : Template Driven Form
-
-Req: Create the Employee Form which contain the following fields:
-
-  EID of type number,
-  ENAME of type string,
-  ESALARY of type number
-
+##Example : Template Driven Form
+#Req: Create the Employee Form which contain the following fields:
+-  EID of type number,
+-  ENAME of type string,
+-  ESALARY of type number
 and StoreData method
-
-HTML 5 Validation
+##HTML 5 Validation
 ------------------
 1. Eid:
 -  Eid is mandatory : required
 -  Eid should be 4 digits : pattern
-
 2. ENAME
 - Ename is mandatory           : required
 - Ename should be 5 characters : minlength
-
 3. ESalary
 - Esalary is mandatory         : required
-
-Validation Properties of angular
+##Validation Properties of angular
 --------------------------------
 1. touched
 2. invalide
 3. errors
-
-Step1: Create the employee component
+#Step1: Create the employee component
+```
 > ng g c employee
-
-Step2: Inside the app.component.html
+```
+##Step2: Inside the app.component.html
+ ```
  <app-employee></app-employee>
-
-Step3: Inside the app.component.ts
+```
+##Step3: Inside the app.component.ts
+```
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-
 @Component({
   selector: 'app-employee',
   imports: [FormsModule,CommonModule],
@@ -1281,10 +1271,9 @@ export class EmployeeComponent {
   }
  }
 }
-
-Step4: Inside the app.component.html
- 
- 
+```
+##Step4: Inside the app.component.html
+ ``` 
   <form #myForm="ngForm">
     <label for="eid">EID:</label>
     <input type="text" name="eid" id="eid" required="required" pattern="[0-9]{4}" [(ngModel)]="eid" #id="ngModel"/>
@@ -1313,26 +1302,23 @@ Step4: Inside the app.component.html
  <hr/>
  Data:{{data | json}}
  <hr/>
-
+```
 -------------------------------------------------------------------------------------------------------------------
-Reactive Form / Model Driven Forms
+##Reactive Form / Model Driven Forms
 -----------------------------------
--> It is a new type of forms in angular, which is suitable for creating large forms with many fields and complex
+- It is a new type of forms in angular, which is suitable for creating large forms with many fields and complex
    validations.
--> In this form , each field is represented as "FromControl" and group of control is represented as "FormGroup"
--> We need to import "ReactiveFormsModule" from "@angular/forms" package.
--> Validation rules are defined in the component by uisng "Validators" object of angular and validate message
+- In this form , each field is represented as "FromControl" and group of control is represented as "FormGroup"
+- We need to import "ReactiveFormsModule" from "@angular/forms" package.
+- Validation rules are defined in the component by uisng "Validators" object of angular and validate message
    are displayed in the template by using Validation Properties of angular.
-
-
-Validaitons in Reactive Forms
+##Validaitons in Reactive Forms
 -----------------------------
 1. Validators.required  -> Field is mandatory.
 2. Validators.minLength -> Minimum no of characters
 3. Validators.maxLength -> Maximum no of characters
 4. Validators.pattern   -> Regular expression
-
-Validation Properties
+##Validation Properties
 ----------------------
 1. touched
    - true     : Field is focused.
@@ -1345,15 +1331,12 @@ Validation Properties
 3. pristine
    - true     : Field is not modified by the user.
    - false    : Field is modified by the user.
-
 4. dirty 
    - true     : Field is modified by the user
    - false    : Field is not modified by the user.
-
 5. valid
     - true    : Field value is valid.
     - false   : Field value is invalid.
-
 6. invalid
     - true    : Field value is invalid
     - false   : Fied value is valid.
@@ -1365,24 +1348,22 @@ Validation Properties
        pattern   : true/false
        number    : true/false
        email     : true/false
-
 ----------------------------------------------------------------------------------------------------------------
-Req: Create the login form which contain the following fields:
-
+##Req: Create the login form which contain the following fields:
 1. Username  of type text 
 2. Password  of type password
 3. One Login Button
 
-Note : We need to perform the client side / server side validation of authentication.
-
-
-Example1:
+#Note : We need to perform the client side / server side validation of authentication.
+##Example1:
 
 Step1:Create the login component
+```
 >ng g c login
-
-login.component.ts
+```
+##login.component.ts
 ------------------
+```
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -1429,10 +1410,10 @@ export class LoginComponent {
       alert('Plz Enter Username and Password')
    }
   }
-
 }
-
-Step2: login.component.html
+```
+##Step2: login.component.html
+```
 <div class="container">
     <h1>Login Page</h1>
     <form [formGroup]="myForm">
@@ -1463,16 +1444,16 @@ Step2: login.component.html
         <h6>INVALID USERNAME AND PASSWORD</h6>
     </div>
 </div>
-
-Step3: Inside the app.component.html
-
+```
+##Step3: Inside the app.component.html
+```
 <app-login></app-login>
-
+```
 --------------------------------------------------------------------------------------------------------------------
-Example2: We have create the login form with responsive and added some more css to make look and feel better.
-
-login.component.html
+##Example2: We have create the login form with responsive and added some more css to make look and feel better.
+##login.component.html
 ----------------------
+```
 <div class="container">
     <h1>Login Page</h1>
     <form [formGroup]="myForm">
@@ -1507,10 +1488,10 @@ login.component.html
         <h6>INVALID USERNAME AND PASSWORD</h6>
     </div>
 </div>
-
-
-login.component.css
+```
+##login.component.css
 -------------------
+```
 .e1{
     color:red;
     font-size:0.9em;
@@ -1595,31 +1576,27 @@ h2 {
     margin-top: 20px;
     font-weight: bold;
 }
+```
 -------------------------------------------------------------------------------------------------------------- 
-Date : 12-08-2025
-Topic: Routing in Angular
-
+# Routing in Angular
 ----------------------------
 Route
 -----
--> Route basically tells the angular router which view to display when a user clicks a link(hyperlink)
+- Route basically tells the angular router which view to display when a user clicks a link(hyperlink)
    or a URL into the browser address bar.
 
--> Every Route consistes of following:
+- Every Route consistes of following:
              1. Path
              2. Component
        path  ------> component   : Which means which path has to mapped the corresponding component.
--> The Router object parses and builds the final URL by using the Route.
-
-
-Routes
+- The Router object parses and builds the final URL by using the Route.
+##Routes
 ------
--> It is an array of Route objects of your application.
--> Where we can configure the corresponding path->component.
-
-app.routes.ts
+- It is an array of Route objects of your application.
+- Where we can configure the corresponding path->component.
+##app.routes.ts
 --------------
-
+```
 import { Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { ServiceComponent } from './components/service/service.component';
@@ -1634,50 +1611,48 @@ export const routes: Routes = [
   {path:'/gallery',component:GalleryComponent},
   {path:'/login',component:LoginComponent}
 ];
-
-RouterOutlet
+```
+##RouterOutlet
 ------------
--> It is directive(<router-outlet) which is basically serves as a placholder , where the Router should 
+- It is directive(<router-outlet) which is basically serves as a placholder , where the Router should 
    be display the view.
-
-RouterLink
+##RouterLink
 ----------
--> The RouterLink is a directive which bascially binds the HTML element to a Route.
--> When we clicking on the HTML element, which is bound to RouterLink , will bascially result in navigation
+- The RouterLink is a directive which bascially binds the HTML element to a Route.
+- When we clicking on the HTML element, which is bound to RouterLink , will bascially result in navigation
    to the Route.
--> The RouterLink may contain parameters to be passed to the routes parameter.
-
+- The RouterLink may contain parameters to be passed to the routes parameter.
+```
 <ul>
   <li><a routerLink="/home">HOME</a></li>
   <li><a routerLink="/service">SERVICE</a></li>
   <li><a routerLink="/gallery">GALLERY</a></li>
  
 </ul>
-
-
  
 baseURL -> / (base url)
 
-/      -> It is mapping with path:'' and redirect to /home (HomeComponent)
-/login ->It is mapping with path:'login' and redirect to LoginComponent
-
+  - It is mapping with path:'' and redirect to /home (HomeComponent)
+  -It is mapping with path:'login' and redirect to LoginComponent
 ----------------------------------------------------------------------------------------------------------
-As of now we have create the following things:
-
-Step1: Create a new project
+##As of now we have create the following things:
+##Step1: Create a new project
+```
 >ng new ems-app
 >cd ems-app
 >code .
-
-Step2: Create the following components
+```
+##Step2: Create the following components
+```
 >ng g c components/home
 >ng g c components/service
 >ng g c components/aboutus
 >ng g c components/gallery
 >ng g c components/login
 >ng g c components/notfound
-
-Step3: Configure the corresponding path to the component inside the app.routes.ts
+```
+##Step3: Configure the corresponding path to the component inside the app.routes.ts
+```
 import { Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { ServiceComponent } from './components/service/service.component';
@@ -1695,11 +1670,11 @@ export const routes: Routes = [
    {path:'',redirectTo:'home',pathMatch:'full'},
    {path:'**',component:NotfoundComponent}
 ];
-
-Step4: Inside the app.component.html we have specifiy the placeholder to view the respective component  template.
-
+```
+##Step4: Inside the app.component.html we have specifiy the placeholder to view the respective component  template.
 I. app.component.ts
 --------------------
+```
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
   
@@ -1712,19 +1687,22 @@ import { RouterOutlet } from '@angular/router';
 export class AppComponent {
   title = 'ems-app';
 }
-
-II.app.component.html
+```
+##II.app.component.html
+```
 <h1>AppComponent</h1>
 
 <hr/>
 
 <router-outlet></router-outlet>
 
-Step5: Start the server
+```
+#Step5: Start the server
+```
 >npm start
-
-Step6: Perform the unit testing by opening the browser:
-
+```
+#Step6: Perform the unit testing by opening the browser:
+```
 URLS
 ----
 http://localhost:4200/           -> It will redirect to HomeComponent
@@ -1735,13 +1713,16 @@ http://localhost:4200/gallery    ->It will redirect to GalleryComponent
 http://localhost:4200/login      ->It will redirect to LoginComponent
 http://localhost:4200/login1     ->It will redirect to NotFoundComponent
 -----------------------------------------------------------------------------------------------------------
-Now we have created the following components(layout):
+```
+##Now we have created the following components(layout):
 -----------------------------------------------------
-Step1:
+##Step1:
+```
 >ng g c components/header
 >ng g c components/footer
-
-Step2: Inside the header.component.html the following code we have written:
+```
+#Step2: Inside the header.component.html the following code we have written:
+```
  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
   <a class="navbar-brand" href="#">CTS</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -1758,8 +1739,9 @@ Step2: Inside the header.component.html the following code we have written:
     </div>
   </div>
 </nav>
-
-Step3: Inside the footer.component.html the following code we have written:
+```
+##Step3: Inside the footer.component.html the following code we have written:
+ ```
  <!-- Remove the container if you want to extend the Footer to full width. -->
 <div class="container my-5">
 
@@ -1789,8 +1771,9 @@ Step3: Inside the footer.component.html the following code we have written:
   
 </div>
 <!-- End of .container -->
-
-Step4: We have configure the bootstrap and icons inside the index.html page
+```
+##Step4: We have configure the bootstrap and icons inside the index.html page
+```
 <!doctype html>
 <html lang="en">
 <head>
@@ -1804,23 +1787,20 @@ Step4: We have configure the bootstrap and icons inside the index.html page
 </head>
 <body>
   <app-root></app-root>
-
-
- <!-- Optional JavaScript; choose one of the two! -->
-
+<!-- Optional JavaScript; choose one of the two! -->
     <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
 
-   
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
  
 </body>
 </html>
-
-Step5:Inside the home.component.html we have create the layout by using bootstrap grid system:
+```
+##Step5:Inside the home.component.html we have create the layout by using bootstrap grid system:
+```
 <div class="container">
     <!--1st Row Added the HeaderComponent-->
   <div class="row">
@@ -1840,13 +1820,13 @@ Step5:Inside the home.component.html we have create the layout by using bootstra
     </div>
   </div>
 </div>
-Step6: Inside the home.component.ts file
+```
+##Step6: Inside the home.component.ts file
 import { Component } from '@angular/core';
 import { HeaderComponent } from "../header/header.component";
 import { FooterComponent } from "../footer/footer.component";
 import { RouterOutlet } from '@angular/router';
- 
-@Component({
+ @Component({
   selector: 'app-home',
   imports: [HeaderComponent, FooterComponent, RouterOutlet],
   templateUrl: './home.component.html',
@@ -1855,11 +1835,15 @@ import { RouterOutlet } from '@angular/router';
 export class HomeComponent {
 
 }
+```
 
-Step7:Inside the app.component.html
- <app-home></app-home>
+##Step7:Inside the app.component.html
+```
+<app-home></app-home>
+```
 
-Step8: Inside the aboutus.component.html
+##Step8: Inside the aboutus.component.html
+```
 <div class="row">
   <div class="col-md-8 ml-5 mt-4">
     <div class="jumbotron mt-2">
@@ -1871,8 +1855,9 @@ Step8: Inside the aboutus.component.html
 </div>
   </div>
 </div>
-
-Step9: Inside the service.component.html
+```
+##Step9: Inside the service.component.html
+```
 <div class="row">
   <div class="col-md-8 ml-5 mt-4">
     <div class="jumbotron mt-2">
@@ -1884,8 +1869,9 @@ Step9: Inside the service.component.html
 </div>
   </div>
 </div>
-
-Step10: Inside the login.component.html (do your own way)
+```
+##Step10: Inside the login.component.html (do your own way)
+```
  <div class="container">
     <h1>Login Page</h1>
     <form [formGroup]="myForm">
@@ -1920,7 +1906,9 @@ Step10: Inside the login.component.html (do your own way)
         <h6>INVALID USERNAME AND PASSWORD</h6>
     </div>
 </div>
-Step11: Inside the login.component.ts
+```
+##Step11: Inside the login.component.ts
+```
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -1969,8 +1957,9 @@ export class LoginComponent {
   }
 
 }
-
-Step12: login.component.css
+```
+##Step12: login.component.css
+```
 .e1{
     color:red;
     font-size:0.9em;
@@ -2056,8 +2045,9 @@ h2 {
     margin-top: 20px;
     font-weight: bold;
 }
-
-Step12:Inside the gallery.component.html
+```
+##Step12:Inside the gallery.component.html
+```
 <div class="container mt-2">
     <h1 style="text-align: center;text-decoration: underline;">GALLERY</h1>
     <div class="row ml-3">
@@ -2093,8 +2083,9 @@ Step12:Inside the gallery.component.html
         </div>
     </div>
 </div>
-
-Step13:Inside the gallery.component.ts
+```
+##Step13:Inside the gallery.component.ts
+```
 import { Component } from '@angular/core';
 
 @Component({
@@ -2109,14 +2100,16 @@ export class GalleryComponent {
  imageURL3:string="assets/images/2.png";
 
 }
-
-Step14: Inside the public->assets->images-> copy the images
-
-Step15: Start the server
+```
+##Step14: Inside the public->assets->images-> copy the images
+##Step15: Start the server
+```
 >npm start
-Step16: Open the browser and type the following url:
-    http://localhost:4200/
-
+```
+##Step16: Open the browser and type the following url:
+  ```
+http://localhost:4200/
+```
 -------------------------------------------------------------------------------------------------------------
 
 
