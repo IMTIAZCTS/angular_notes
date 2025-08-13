@@ -1,0 +1,34 @@
+<div class="container">
+    <h1>Login Page</h1>
+    <form [formGroup]="myForm">
+
+  <div class="form-group">
+    <label for="username">USERNAME:</label>
+    <input type="text" class="form-control w-50" id="username" formControlName="username" >
+ <div *ngIf="myFc?.['username']?.touched && myFc?.['username']?.invalid">&nbsp;
+            <div *ngIf="myForm.get('username')?.errors?.['required']" class="alert alert-danger w-50" role="alert">
+                <small class="form-text text-muted">*UserName is required</small>
+            </div>
+              
+</div> 
+</div>
+  <div class="form-group">
+    <label for="password">Password:</label>
+    <input type="password" class="form-control w-50" id="password" formControlName="password">
+<div *ngIf="myFc?.['password']?.touched && myFc?.['password']?.invalid">&nbsp;
+            <div *ngIf="myForm.get('password')?.errors?.['required']" class="alert alert-danger w-50" role="alert">
+                <small class="form-text text-muted">*Password is required</small>
+            </div>
+              
+</div>
+    </div>
+  
+      
+     
+      <input type="submit" (click)="validation()" class="btn btn-primary">
+    </form>
+   
+    <div *ngIf="flag" class="alert alert-danger w-25 mt-2" role="alert">
+        <h6>INVALID USERNAME AND PASSWORD</h6>
+    </div>
+</div>

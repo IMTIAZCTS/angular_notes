@@ -1,0 +1,70 @@
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-12">
+      <form (ngSubmit)="updateEmployee()">
+  <div class="form-group ml-4">
+    <label for="eid">EID:</label>
+    <input
+      type="text"
+      name="eid"
+      id="eid"
+      class="form-control w-50"
+      required="required"
+      pattern="[0-9]{4}"
+      [(ngModel)]="employee.eid"
+      #id="ngModel"
+    />
+    <div *ngIf="id.touched && id.invalid">
+      <span *ngIf="id.errors?.['required']" class="e1">*EID is Mandatory</span>
+      <span *ngIf="id.errors?.['pattern']" class="e1"
+        >*It Should be 4 Digits</span
+      >
+    </div>
+  </div>
+
+  <div class="form-group ml-4">
+    <label for="ename">ENAME:</label>
+    <input
+      type="text"
+      name="ename"
+      id="ename"
+      class="form-control w-50"
+      required="required"
+      minlength="5"
+      [(ngModel)]="employee.ename"
+      #name="ngModel"
+    />
+    <div *ngIf="name.touched && name.invalid">
+      <span *ngIf="name.errors?.['required']" class="e1"
+        >*Name is Mandatory</span
+      >
+      <span *ngIf="name.errors?.['minlength']" class="e1"
+        >*Name Must be at least 5 character</span
+      >
+    </div>
+  </div>
+
+  <div class="form-group ml-4">
+    <label for="esalary">ESALARY:</label>
+    <input
+      type="text"
+      name="esalary"
+      id="esalary"
+      class="form-control w-50"
+      required="required"
+      [(ngModel)]="employee.esalary"
+      #sal="ngModel"
+    />
+    <div *ngIf="sal.touched && sal.invalid">
+      <span *ngIf="sal.errors?.['required']" class="e1"
+        >*Esalary is Mandatory</span
+      >
+    </div>
+  </div>
+
+  <input type="submit" class="btn btn-success ml-4" value="UPDATE" />
+</form>
+
+    </div>
+  </div>
+</div>
