@@ -1,0 +1,11 @@
+{
+    "employees":[
+        {"eid":1001,"ename":"RAJU","esalary":30000.00},
+        {"eid":1002,"ename":"SUNIL","esalary":40000.00},
+        {"eid":1003,"ename":"RAMESH","esalary":60000.00},
+        {"eid":1004,"ename":"MAHESH","esalary":80000.00},
+        {"eid":1005,"ename":"HANEEF","esalary":70000.00}
+    ]
+    
+    
+}
