@@ -2147,6 +2147,178 @@ export class GalleryComponent {
 ##Step16: Open the browser and type the following url:
   ###http://localhost:4200/
 -------------------------------------------------------------------------------------------------------------
+ # Angular Service
+- What is Service in Angular?
+Ans: In Angular, a service is a simple typescript class which  basically contains reusable business logic or data-related code.
+
+- If I am not using the service then if multiple component need a same logic, then the same logic has to repeated in each and every component.
+- If we use the service then the repeated code we can write in service and we can use it in every components.
+
+import { Injectable } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class EmployeeService {
+
+  constructor() { }
+}
+
+
+
+Q1. What is Depedency Injection?
+Ans:
+- In case of Angular it is one of the design pattern or feature which basically allows you to supply (inject)
+  and object's depedencies from the outside, rather than the object creating them itself.
+- In short angular creates the object for you and angular manages its lifecyle.
+
+- We need to register the dependency(service) in angular injector.
+  -> It means that it happens automatically when you use @Injectable({provideIn:'root'}).
+
+Q2. What is @Injectable in Angular?
+Ans:
+- It is a decorator that marks a class as available for Dependency Injection.
+
+Q3. What is provideIn:'root' in angular service?
+Ans:
+- It will tells the angular how and where to provide the service. Here 'root' means the service is available
+  globally in the angular application i.e. we can use any where.
+- It indicate's that it will creates a single instance.
+- And it also say that we no need to configure explicitly inside the app.module.ts inside the providers[] array.
+
+---------------------------------------------------------------------------------------------------------
+Step1: Create the db.json file and store the data into  it.
+       public -> assets-> db.json
+{
+    "employees":[
+        {"eid":1001,"ename":"RAJU","esalary":30000.00},
+        {"eid":1002,"ename":"SUNIL","esalary":40000.00},
+        {"eid":1003,"ename":"RAMESH","esalary":60000.00},
+        {"eid":1004,"ename":"MAHESH","esalary":80000.00},
+        {"eid":1005,"ename":"HANEEF","esalary":70000.00}
+    ]
+    ,
+    "projects":[
+        
+    ]
+}
+Step2: Install the json-server
+>npm install -g json-server
+
+Step3: Start the json-server
+Note : Make sure we need to go to specific location(absolute location to start the server)
+>json-server --watch db.json
+-> It will show all the ends points
+ http://localhost:3000/employees
+
+Step4: Create the employee service
+>ng g service employee
+
+Step5: Create the model
+>ng g i employee
+
+Step6: Inside the  employee.service.ts the following code
+
+- Before creating the service try to configure the provideHttpClient inside the app.configure.ts
+app.configure.ts
+----------------
+import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import { provideRouter } from '@angular/router';
+
+import { routes } from './app.routes';
+import { provideHttpClient } from '@angular/common/http';
+
+export const appConfig: ApplicationConfig = {
+  providers: [provideZoneChangeDetection({ eventCoalescing: true }),      provideRouter(routes),provideHttpClient()]
+};
+
+employee.service.ts
+----------------------
+
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { map, Observable } from 'rxjs';
+import { Employee } from './model/employee';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class EmployeeService {
+ baseURL:string="http://localhost:3000/employees";
+ //We have to asked the angular to inject the pre-define service 
+ // In order to use this service we need to configure inside the app.configure.ts (provideHttpClient)
+ constructor(private http:HttpClient) {}
+
+
+  //get the all employee data from db.json
+  getAllEmployees():Observable<Employee[]>{
+      
+    return this.http.get<Employee[]>(this.baseURL);  //It is returning the Observable object  
+  }
+  
+}
+
+-------------------------------------------------------------------------------------------------------------
+Note: Now we can inject this EmployeeService any where in the angular application(components)
+
+Step7: In order to test we  have used inside the EmployeeComponent
+
+import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
+import { FormsModule, NgForm } from '@angular/forms';
+import { EmployeeService } from '../employee.service';
+import { Employee } from '../model/employee';
+
+@Component({
+  selector: 'app-employee',
+  imports: [FormsModule,CommonModule],
+  templateUrl: './employee.component.html',
+  styleUrl: './employee.component.css'
+})
+export class EmployeeComponent {
+ eid?:number;
+ ename:string="";
+ esalary?:number;
+ data:any;
+ employees:Employee[]=[];
+
+  // We are asking the angular to create an object for EmployeeService and inject here.
+ constructor(private employeeServiceRef:EmployeeService){}
+ 
+
+
+ getEmployees():void{
+    // invoke the getAllEmployees()
+    this.employeeServiceRef.getAllEmployees().subscribe((data)=>{
+      
+      this.employees=data;
+        
+    });
+}
+
+}
+
+Step8: Now we can present the data inside the employee.component.html
+
+<table>
+  <tr>
+    <th>EID</th>
+    <th>ENAME</th>
+    <th>ESALARY</th>
+
+  </tr>
+
+   <tr *ngFor="let employee of employees;">
+        <td>{{employee.eid}}</td>
+        <td>{{employee.ename}}</td>
+        <td>{{employee.esalary}}</td>
+
+   </tr>
+</table>
+ <hr/>
+
+ 
+
 
 
 
