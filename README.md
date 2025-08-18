@@ -2317,6 +2317,262 @@ Step8: Now we can present the data inside the employee.component.html
 </table>
  <hr/>
 
+# ---------------------------------------------------------------------------------------------------------------------------------------------------------
+# Router Guard
+# -------------
+- The Guard is a service that executes at the specified situation while angular is navigating from one route to anther route.
+
+- Basically the Angular Guards are classes that determine whether a route can be activated, deactivated , loaded if data can be resolved
+  before navigations.
+
+- The following are the different types of Aguards available which are listed below:
+
+1. CanActivate :  It can be determines if a route can be activated.
+2. CanDeactivate : It can be determines if you can leave the current route.
+3. CanActivateChild : It can determines if child routes can be activated.
+4. Resolve  : It can used  fecthes data from the route is actived.
+5. CanLoad : Prevents lazy-loaded modules from loading until the condition is satified.
+
+
+How to implement the guard in our applications
+-----------------------------------------------
+
+# Step1: Create the guard
+
+# > ng g guard name_of_guard
+
+# >ng g guard authguard
+```
+import { Injectable } from "@angular/core";
+import { CanActivate, Router } from "@angular/router";
+import { AuthService } from "./auth.service";
+
+@Injectable({
+  providedIn:'root'
+})
+export class AuthGuardService implements CanActivate{
+
+  constructor(private authService:AuthService,private router:Router){}
+
+  canActivate():boolean{
+    if (this.authService.isAuthentication()) {
+  console.log('---AuthGuardService is Activated----');
+  return true;
+} else {
+  this.router.navigate(['login']);
+  return false;
+}
+
+  }
+
+  
+}
+```
+
+# Step2: Use the above Guard in Dashboard , configure inside the app.routes.ts
+```
+import { Routes } from '@angular/router';
+import { ServiceComponent } from './service/service.component';
+import { AboutusComponent } from './aboutus/aboutus.component';
+import { GalleryComponent } from './gallery/gallery.component';
+import { LoginComponent } from './login/login.component';
+import { DashbarodComponent } from './dashbarod/dashbarod.component';
+import { AuthGuardService } from './authguard.guard';
+
+export const routes: Routes = [
+    {path:'service',component:ServiceComponent},
+    {path:'aboutus',component:AboutusComponent},
+    {path:'gallery',component:GalleryComponent},
+    {path:'login',component:LoginComponent},
+    {path:'dashboard',component:DashbarodComponent,canActivate:[AuthGuardService]}
+];
+
+```
+
+# Step3: Create the service auth.service.ts
+# >ng g s authservice
+```
+  import { HttpClient } from '@angular/common/http';
+  import { Injectable } from '@angular/core';
+  import { Router } from '@angular/router';
+  import { Observable,map,pipe } from 'rxjs';
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class AuthService {
+  baseURL:string="http://localhost:3000/authentication";
+
+    constructor(private http:HttpClient,private router:Router) {}
+
+    isLoggedOrNot(uname:string,pwd:string):Observable<boolean>{
+      console.log('username:'+uname)
+      console.log('password:'+pwd)
+        return  this.http.get<any>(this.baseURL).pipe(
+              map(auths=>{
+              let a=auths.find(
+                (auth1:{username:string,password:string}
+
+                )=>auth1.username===uname && auth1.password===pwd);
+                //store in localstorage
+                if(a){
+                  localStorage.setItem('isLoggedIn','true');
+                  localStorage.setItem('username',uname);
+                  return true;
+                }
+                  return  false;
+                
+                 
+              }
+              
+            ))
+      
+    }//close the method
+    
+    isAuthentication():boolean{
+      let flag=localStorage.getItem('isLoggedIn')
+      return (flag==='true')?true:false;
+      }//close isAutentication Method
+    
+      isLogout():void{
+        localStorage.clear();
+        this.router.navigate(['/login'])
+      }
+
+  }//close class
+
+```
+# Step4: Inject the AuthService inside the login.component.ts and login.component.html
+
+# login.component.html
+```
+<div class="container">
+    <h1>Login Page</h1>
+    <form [formGroup]="myForm">
+
+  <div class="form-group">
+    <label for="username">USERNAME:</label>
+    <input type="text" class="form-control w-50" id="username" formControlName="username" >
+ <div *ngIf="myFc?.['username']?.touched && myFc?.['username']?.invalid">&nbsp;
+            <div *ngIf="myForm.get('username')?.errors?.['required']" class="alert alert-danger w-50" role="alert">
+                <small class="form-text text-muted">*UserName is required</small>
+            </div>
+              
+</div> 
+</div>
+  <div class="form-group">
+    <label for="password">Password:</label>
+    <input type="password" class="form-control w-50" id="password" formControlName="password">
+<div *ngIf="myFc?.['password']?.touched && myFc?.['password']?.invalid">&nbsp;
+            <div *ngIf="myForm.get('password')?.errors?.['required']" class="alert alert-danger w-50" role="alert">
+                <small class="form-text text-muted">*Password is required</small>
+            </div>
+              
+</div>
+    </div>
+  
+      
+     
+      <input type="submit" (click)="validation()" class="btn btn-primary">
+    </form>
+   
+    <div *ngIf="flag" class="alert alert-danger w-25 mt-2" role="alert">
+        <h6>INVALID USERNAME AND PASSWORD</h6>
+    </div>
+</div>
+```
+
+# login.component.ts
+```
+import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AuthService } from '../auth.service';
+import { Router } from '@angular/router';
+
+@Component({
+  selector: 'app-login',
+  imports: [ReactiveFormsModule,CommonModule],
+  templateUrl: './login.component.html',
+  styleUrl: './login.component.css'
+})
+export class LoginComponent {
+  flag:boolean=false;
+  myForm:FormGroup;
+  constructor(private authService:AuthService,private router:Router){
+  this.myForm = new FormGroup({
+   username:new FormControl("",[Validators.required]), // username object <-- FormControl
+   password:new FormControl("",[Validators.required])
+  });
+  // console.log(this.myForm);
+   
+  }//close the constructor
+
+ //getter method
+ get myFc(){
+   return this.myForm.controls;
+ }
+  //validation method
+  validation():void{
+   if(this.myForm.valid){
+      const {username,password}=this.myForm.value;//
+      //to achived asyn behaviour
+        setTimeout(()=>{
+           this.authService.isLoggedOrNot(username,password).subscribe(flag=>{
+                          if(flag==true){
+                              localStorage.setItem('username',username)
+                              this.router.navigate(['/dashboard'])
+                          }else{
+                              this.flag=true;
+                          }
+           })
+        this.myForm.reset();
+        },2000);
+      }else{
+      alert('Plz Enter Username and Password')
+   }
+  }
+
+}
+```
+# Step5: Inside the dashboard the following code
+# 1. dashboard.component.ts
+```
+import { Component } from '@angular/core';
+import { AuthService } from '../auth.service';
+
+@Component({
+  selector: 'app-dashbarod',
+  imports: [],
+  templateUrl: './dashbarod.component.html',
+  styleUrl: './dashbarod.component.css'
+})
+export class DashbarodComponent {
+username: string = '';
+
+constructor(private authService: AuthService) {
+  this.username = localStorage.getItem('username') || '';
+}
+
+ logout():void{
+  this.authService.isLogout();
+ }
+}
+
+```
+
+# 2. dashboard.component.html
+
+```
+<h1>
+Welcome to User:{{username}}&nbsp;
+
+<hr/>
+<button (click)="logout()" class="btn btn-danger">Logout</button>
+</h1>
+```
+
+
  
 
 
