@@ -2573,9 +2573,19 @@ Welcome to User:{{username}}&nbsp;
 ```
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- 
-# Lifecycle Hooks in Angular
+
+Angular Hooks
+-------------
+- Angular application does not use all the components at once. It only uses the one or more which are required.
+- Whenever angular needs to use a component, it creates a new instance of that component and start using it in DOM.
+
+- Once the use is done angular destroy this instance and removed from DOM.
+
+- During this process (create instance to destroy) there are several stages that angular covers and this is called as component life cycle or angular hooks.
+
 - Angular provides lifecycle hooks that allow developers to tap into key moments in a component or directive's lifecycle. These hooks enable you to execute custom logic during creation, updates, and destruction of components. Below is an overview of the most commonly used lifecycle hooks:
 
+- The following are the Life Cycle Hooks Methods
 # Lifecycle Hook Sequence:
 - ngOnChanges
 - ngOnInit
@@ -2585,8 +2595,13 @@ Welcome to User:{{username}}&nbsp;
 - ngAfterViewInit
 - ngAfterViewChecked
 - ngOnDestroy
-These hooks provide a structured way to manage the lifecycle of Angular components, ensuring clean and efficient code.
-
+# These hooks provide a structured way to manage the lifecycle of Angular components, ensuring clean and efficient code.
+- Each hook has an interface and in order to use a hook in component we need to implement the corresponding interface.
+# Tip: To find the corresponding interface just remove the ng text from the method name.
+- Example 
+ - Method Name : ngOnInit
+ - Interface Name: OnInit
+---------------------------------------------------------------------------------------------------------------------------------
 
 1. ngOnChanges
 When it's called: Before ngOnInit, whenever an input property bound to the component changes.
