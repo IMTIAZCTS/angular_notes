@@ -595,6 +595,252 @@ export const routes: Routes = [
 <img width="955" height="308" alt="image" src="https://github.com/user-attachments/assets/8135a0a2-b06b-4e3b-a712-ff2fee7c3fda" />
 
 ----------------------------------------------------------------------------------------------------------------------------------------------
+🔄 Comparison with ngAfterContentInit()
+- Hook	When It Runs	Frequency
+  - ngAfterContentInit()
+      - Once, after content is initialized	One-time
+  - ngAfterContentChecked()
+      - After every content check cycle	Multiple times
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+## ngAfterViewChecked()
+📌 What It Does:
+- This hook is called after Angular checks the component’s view and its child views. It runs after every change detection cycle, just like ngAfterContentChecked()—but this one focuses on the view, not the projected content.
+
+🧠 Think of It Like:
+- “Angular just finished checking the view. Want to do anything now?”
+
+🧪 Example: Watching View Updates
+- Let’s say you want to log every time the view is checked, maybe to track layout changes or debug rendering issues.
+
+
+## Step1: Create the component i.e.viewcheck
+```
+ng g c viewcheck
+```
+### Step2: Inside the viewcheck.component.ts
+```
+import { AfterViewChecked, Component, ElementRef, ViewChild } from '@angular/core';
+@Component({
+  selector: 'app-viewcheck',
+  imports: [],
+  template: `
+   <h3 #ms>{{msg}}</h3>
+  `,
+  styleUrl: './viewcheck.component.css'
+})
+export class ViewcheckComponent implements AfterViewChecked{
+  @ViewChild('ms') msgElement!:ElementRef;
+msg:string='Hi';
+
+constructor(){
+  console.log('--ngAfterViewChecked Constructor---');
+  
+}
+
+ngAfterViewChecked(): void {
+  console.log('--ngAfterviewChecked---');
+  this.msg="Good Evening";
+  //We can measure the layout of the component
+  const width=this.msgElement.nativeElement.offsetWidth;
+  console.log('Width is:',width);
+  
+}
+changeMsg():void{
+  this.msg="Hello";
+}
+
+}
+```
+### Step3: Inside the app.component.html
+```
+ <h1>Welcome to Life-Cycle Hooks Methods..</h1>
+
+ <hr/>
+ 
+  <a routerLink="/about">About</a>&nbsp;
+  <a routerLink="/docheck">DoCheck</a>&nbsp;
+  <a routerLink="/viewinit">ViewInit</a>&nbsp;
+  <a routerLink="/parent">ParentComponent(AfterContentInit)</a>&nbsp;
+  <a routerLink="/child">ChildComponent(AfterContentInit)</a>&nbsp;
+  <a routerLink="/fancy">FancyCard(ng-content)</a>&nbsp;
+  <a routerLink="/use">UseCard(ng-content)</a>&nbsp;
+  <a routerLink="/card">Card(ngAfterContentChecked)</a>&nbsp;
+  <a routerLink="/viewcheck">ViewCheck(ngAfterViewChecked)</a>&nbsp;
+ <hr/>
+ <router-outlet></router-outlet>
+```
+### Step4: Inside the app.routes.ts
+```
+import { Routes } from '@angular/router';
+import { AppComponent } from './app.component';
+import { AboutComponent } from './about/about.component';
+import { HomeComponent } from './home/home.component';
+import { DocheckComponent } from './docheck/docheck.component';
+import { ViewinitidemoComponent } from './viewinitidemo/viewinitidemo.component';
+import { ParentComponent } from './parent/parent.component';
+import { ChildComponent } from './child/child.component';
+import { FancycardComponent } from './fancycard/fancycard.component';
+import { UseComponent } from './use/use.component';
+import { CardComponent } from './card/card.component';
+import { ViewcheckComponent } from './viewcheck/viewcheck.component';
+
+export const routes: Routes = [
+    {path:'',component:HomeComponent},
+    {path:'about',component:AboutComponent},
+    {path:'docheck',component:DocheckComponent},
+    {path:'viewinit',component:ViewinitidemoComponent},
+    {path:'parent',component:ParentComponent},
+    {path:'child',component:ChildComponent},
+    {path:'fancy',component:FancycardComponent},
+    {path:'use',component:UseComponent},
+    {path:'card',component:CardComponent},
+    {path:'viewcheck',component:ViewcheckComponent}
+];
+
+```
+### Step5: Output
+
+<img width="959" height="406" alt="image" src="https://github.com/user-attachments/assets/35893522-284c-43a4-a66a-b4097adf012a" />
+
+
+🔄 Comparison with ngAfterViewInit()
+- Hook	When It Runs	Frequency
+  - ngAfterViewInit()
+      - Once, after view is initialized	One-time
+  - ngAfterViewChecked()
+      - After every view check cycle	Multiple times
+
+⚠️ Use With Care
+- Because ngAfterViewChecked() runs often, avoid putting heavy logic inside it. Use it for:
+1. Layout measurements
+2. Debugging view updates
+3. Triggering lightweight UI adjustments
+-------------------------------------------------------------------------------------------------------------------------------------------
+🔄 ngOnChanges()
+📌 What It Does:
+- ngOnChanges() is called whenever an @Input() property changes. It runs before ngOnInit() and every time the input value updates.
+🧠 Think of It Like:
+- “Hey, one of the inputs to this component just changed—do you want to react to it?”
+
+🧪 Example: Reacting to Input Changes
+- Let’s say you have a GreetingComponent that receives a name from its parent.
+
+### Step1: Create the component greeting component
+```
+ng g c greeting
+ng g c myparent
+```
+### Step2: Inside the myparent.component.ts
+```
+import { Component } from '@angular/core';
+import { GreetingComponent } from "../greeting/greeting.component";
+import { FormsModule } from '@angular/forms';
+
+@Component({
+  selector: 'app-myparent',
+  imports: [GreetingComponent,FormsModule],
+  template: `
+  <app-greeting [name]="username"></app-greeting>
+  <input [(ngModel)]="username" placeholder="Enter UserName"/>
+  `,
+  styleUrl: './myparent.component.css'
+})
+export class MyparentComponent {
+  username:string='';
+}
+```
+### Step3: Inside the greeting.component.ts
+```
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+@Component({
+  selector: 'app-greeting',
+  imports: [],
+  template: `
+   <h2>Hello,{{name}}</h2>
+  `,
+  styleUrl: './greeting.component.css'
+})
+export class GreetingComponent implements OnChanges {
+ @Input('name') name:string='';
+
+ ngOnChanges(changes: SimpleChanges): void {
+     console.log('--ngOnChanges---');
+     console.log('-Changes : ',changes);
+     
+ }
+}
+```
+### Step4: Inside the app.component.html
+```
+ <h1>Welcome to Life-Cycle Hooks Methods..</h1>
+
+ <hr/>
+ 
+  <a routerLink="/about">About</a>&nbsp;
+  <a routerLink="/docheck">DoCheck</a>&nbsp;
+  <a routerLink="/viewinit">ViewInit</a>&nbsp;
+  <a routerLink="/parent">ParentComponent(AfterContentInit)</a>&nbsp;
+  <a routerLink="/child">ChildComponent(AfterContentInit)</a>&nbsp;
+  <a routerLink="/fancy">FancyCard(ng-content)</a>&nbsp;
+  <a routerLink="/use">UseCard(ng-content)</a>&nbsp;
+  <a routerLink="/card">Card(ngAfterContentChecked)</a>&nbsp;
+  <a routerLink="/viewcheck">ViewCheck(ngAfterViewChecked)</a>&nbsp;
+  <a routerLink="/myparent">NgOnChange(ngOnChange)</a>&nbsp;
+ <hr/>
+ <router-outlet></router-outlet>
+```
+
+### Step5: Inside the app.routes.ts
+```
+import { Routes } from '@angular/router';
+import { AppComponent } from './app.component';
+import { AboutComponent } from './about/about.component';
+import { HomeComponent } from './home/home.component';
+import { DocheckComponent } from './docheck/docheck.component';
+import { ViewinitidemoComponent } from './viewinitidemo/viewinitidemo.component';
+import { ParentComponent } from './parent/parent.component';
+import { ChildComponent } from './child/child.component';
+import { FancycardComponent } from './fancycard/fancycard.component';
+import { UseComponent } from './use/use.component';
+import { CardComponent } from './card/card.component';
+import { ViewcheckComponent } from './viewcheck/viewcheck.component';
+import { GreetingComponent } from './greeting/greeting.component';
+import { MyparentComponent } from './myparent/myparent.component';
+
+export const routes: Routes = [
+    {path:'',component:HomeComponent},
+    {path:'about',component:AboutComponent},
+    {path:'docheck',component:DocheckComponent},
+    {path:'viewinit',component:ViewinitidemoComponent},
+    {path:'parent',component:ParentComponent},
+    {path:'child',component:ChildComponent},
+    {path:'fancy',component:FancycardComponent},
+    {path:'use',component:UseComponent},
+    {path:'card',component:CardComponent},
+    {path:'viewcheck',component:ViewcheckComponent},
+    {path:'greeting',component:GreetingComponent},
+    {path:'myparent',component:MyparentComponent}
+];
+
+```
+### Step5: Output
+<img width="959" height="392" alt="image" src="https://github.com/user-attachments/assets/e743c9eb-061b-4ef4-b566-60b4d99f981a" />
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
