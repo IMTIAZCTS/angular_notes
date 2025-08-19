@@ -2572,15 +2572,92 @@ Welcome to User:{{username}}&nbsp;
 </h1>
 ```
 
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------- 
+# Lifecycle Hooks in Angular
+- Angular provides lifecycle hooks that allow developers to tap into key moments in a component or directive's lifecycle. These hooks enable you to execute custom logic during creation, updates, and destruction of components. Below is an overview of the most commonly used lifecycle hooks:
 
- 
+# Lifecycle Hook Sequence:
+- ngOnChanges
+- ngOnInit
+- ngDoCheck
+- ngAfterContentInit
+- ngAfterContentChecked
+- ngAfterViewInit
+- ngAfterViewChecked
+- ngOnDestroy
+These hooks provide a structured way to manage the lifecycle of Angular components, ensuring clean and efficient code.
 
 
-
-
-
-
-
-
-
-
+1. ngOnChanges
+When it's called: Before ngOnInit, whenever an input property bound to the component changes.
+Use case: Respond to changes in input properties.
+#Example:
+```
+ngOnChanges(changes: SimpleChanges): void {
+  console.log('Input property changed:', changes);
+}
+```
+2. ngOnInit
+When it's called: Once, after the first ngOnChanges.
+Use case: Initialize the component, fetch data, or set up subscriptions.
+Example:
+```
+ngOnInit(): void {
+  console.log('Component initialized');
+}
+```
+3. ngDoCheck
+- When it's called: During every change detection cycle.
+- Use case: Perform custom change detection or respond to changes Angular doesn't detect.
+# Example: 
+```
+ngDoCheck(): void {
+  console.log('Custom change detection logic');
+}
+```
+4. ngAfterContentInit
+- When it's called: Once, after projecting external content into the component's view.
+- Use case: Respond to content projection initialization.
+- Example:
+```
+ngAfterContentInit(): void {
+  console.log('Content projection initialized');
+}
+```
+5. ngAfterContentChecked
+- When it's called: After every check of projected content.
+- Use case: Respond to changes in projected content.
+- Example:
+```
+ngAfterContentChecked(): void {
+  console.log('Projected content checked');
+}
+```
+6. ngAfterViewInit
+- When it's called: Once, after the component's view and child views are initialized.
+- Use case: Perform actions that depend on the view being fully initialized.
+- Example:
+```
+  ngAfterViewInit(): void {
+  console.log('View initialized');
+}
+```
+7. ngAfterViewChecked
+- When it's called: After every check of the component's view and child views.
+- Use case: Respond to changes in the view.
+- Example:
+```
+  ngAfterViewChecked(): void {
+  console.log('View checked');
+}
+```
+8. ngOnDestroy
+- When it's called: Just before the component or directive is destroyed.
+- Use case: Clean up resources like subscriptions or event listeners.
+- Example:
+```
+  ngOnDestroy(): void {
+  console.log('Component destroyed');
+}
+```
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
