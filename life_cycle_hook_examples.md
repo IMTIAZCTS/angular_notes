@@ -827,11 +827,129 @@ export const routes: Routes = [
 ### Step5: Output
 <img width="959" height="392" alt="image" src="https://github.com/user-attachments/assets/e743c9eb-061b-4ef4-b566-60b4d99f981a" />
 
+✅ When to Use It
+To validate or transform input data
+
+To trigger logic based on input changes
+
+To compare old vs new values
+
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
+ Each hook plays a specific role:
+## Angular Lifecycle Hooks
+
+| Hook                    | When It Runs                               | Purpose                                      |
+|-------------------------|--------------------------------------------|----------------------------------------------|
+| `ngOnChanges`           | On input property change                   | React to changes in `@Input()` values        |
+| `ngOnInit`              | Once after first `ngOnChanges`             | Initialize component                         |
+| `ngDoCheck`             | During every change detection cycle        | Custom change detection                      |
+| `ngAfterContentInit`    | After content (`ng-content`) is projected  | Respond to content initialization            |
+| `ngAfterContentChecked` | After every check of projected content     | Respond to content checks                    |
+| `ngAfterViewInit`       | After component's view is initialized      | Access view child elements                   |
+| `ngAfterViewChecked`    | After every check of component's view      | Respond to view checks                       |
+| `ngOnDestroy`           | Just before component is destroyed         | Cleanup (unsubscribe, clear timers, etc.)    |
 
 
+--------------------------------------------------------------------------------------------------------------------------------------------------------
 
+### 🌿 Angular Lifecycle Hooks – Interview Questions & Answers
 
+## 🧠 Basic-Level Questions
+
+### 1. What are Angular lifecycle hooks?
+Lifecycle hooks are special methods in Angular that allow you to tap into key moments in a component or directive’s life—like creation, updates, and destruction.
+
+---
+
+### 2. How many lifecycle hooks are there in Angular?
+There are **eight** main lifecycle hooks:
+- `ngOnChanges`
+- `ngOnInit`
+- `ngDoCheck`
+- `ngAfterContentInit`
+- `ngAfterContentChecked`
+- `ngAfterViewInit`
+- `ngAfterViewChecked`
+- `ngOnDestroy`
+
+---
+
+### 3. Which lifecycle hook is called first?
+`ngOnChanges` is called first—**only if there are `@Input()` properties**. Otherwise, `ngOnInit` is the first hook called.
+
+---
+
+### 4. What is the purpose of `ngOnInit()`?
+Used for component initialization—like fetching data, setting up subscriptions, or preparing the UI. It runs once after the first `ngOnChanges`.
+
+---
+
+## 🔍 Intermediate-Level Questions
+
+### 5. What is the difference between `ngOnInit()` and `constructor()`?
+- `constructor()` is used for dependency injection and basic setup.
+- `ngOnInit()` is used for initialization logic that depends on Angular bindings being ready.
+
+---
+
+### 6. When is `ngOnDestroy()` called and why is it important?
+It’s called just before the component is removed from the DOM. It’s crucial for:
+- Unsubscribing from Observables
+- Clearing timers
+- Releasing resources
+
+---
+
+### 7. What does `ngDoCheck()` do?
+It allows custom change detection logic. It runs during every change detection cycle, even if Angular doesn’t detect changes.
+
+---
+
+### 8. What is the use of `ngAfterContentInit()` and `ngAfterContentChecked()`?
+These hooks deal with projected content (`<ng-content>`):
+- `ngAfterContentInit()` runs once after content is projected.
+- `ngAfterContentChecked()` runs after every check of that content.
+
+---
+
+### 9. What is the difference between `ngAfterViewInit()` and `ngAfterViewChecked()`?
+These hooks deal with the component’s own view:
+- `ngAfterViewInit()` runs once after the view is initialized.
+- `ngAfterViewChecked()` runs after every view check.
+
+---
+
+### 10. Can you access `@ViewChild` in `ngOnInit()`?
+No. `@ViewChild` is only available after the view is initialized—so you must access it in `ngAfterViewInit()`.
+
+---
+
+## 🧪 Advanced-Level Questions
+
+### 11. How does Angular detect changes in `ngOnChanges()`?
+Angular compares the new value of `@Input()` properties with the previous value and passes a `SimpleChanges` object to `ngOnChanges()`.
+
+---
+
+### 12. What happens if you mutate an object or array passed via `@Input()`?
+Angular may not detect the change unless the reference changes. In such cases, use `ngDoCheck()` for custom detection.
+
+---
+
+### 13. Can lifecycle hooks be used in directives?
+Yes! Most lifecycle hooks (like `ngOnInit`, `ngOnDestroy`, `ngDoCheck`) can be used in directives as well.
+
+---
+
+### 14. How would you clean up subscriptions in a component?
+Use `ngOnDestroy()` to unsubscribe manually or use `takeUntil()` with a `Subject` that emits on destroy.
+
+---
+
+### 15. What’s the best hook for initializing third-party libraries that need DOM access?
+`ngAfterViewInit()`—because the DOM is fully rendered and accessible at that point.
+
+---
 
 
 
